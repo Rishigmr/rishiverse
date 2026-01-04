@@ -2,129 +2,145 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Rishiverse – All in One Games</title>
+<title>Rishiverse</title>
+
 <style>
-*{box-sizing:border-box;font-family:Arial}
-body{
+*{
   margin:0;
-  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-  color:#fff;
+  padding:0;
+  box-sizing:border-box;
+  font-family: Arial, sans-serif;
 }
-header{
-  padding:15px;
-  text-align:center;
-  font-size:26px;
-  font-weight:bold;
+
+/* BODY */
+body{
+  background:#121212;
+  color:white;
 }
-.top{
+
+/* TOP NAVBAR */
+.navbar{
   display:flex;
   justify-content:space-between;
-  padding:10px 20px;
+  align-items:center;
+  padding:15px 25px;
+  background:#1f1f1f;
 }
-.card{
-  background:rgba(0,0,0,0.6);
-  padding:15px;
-  border-radius:12px;
+
+.logo{
+  font-size:22px;
+  font-weight:bold;
 }
-.grid{
+
+.nav-links span{
+  margin-left:20px;
+  cursor:pointer;
+  opacity:0.8;
+}
+
+.nav-links span:hover{
+  opacity:1;
+}
+
+/* MAIN AREA */
+.container{
+  padding:25px;
+}
+
+/* GAME GRID */
+.games{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:15px;
-  padding:20px;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:20px;
 }
-.game{
-  background:#111;
-  padding:20px;
-  border-radius:15px;
+
+/* GAME CARD */
+.game-card{
+  background:#222;
+  border-radius:12px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.game-card:hover{
+  transform:scale(1.05);
+}
+
+/* GAME IMAGE */
+.game-img{
+  height:120px;
+  background:linear-gradient(135deg,#ff9800,#ff5722);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:40px;
+}
+
+/* GAME NAME */
+.game-name{
+  padding:10px;
   text-align:center;
-  cursor:pointer;
-  transition:.3s;
-}
-.game:hover{background:#222;transform:scale(1.05)}
-button{
-  padding:10px 20px;
-  border:none;
-  border-radius:10px;
-  background:#ff9800;
   font-size:16px;
-  cursor:pointer;
 }
-.hidden{display:none}
+
+/* FOOTER */
+.footer{
+  text-align:center;
+  padding:15px;
+  opacity:0.6;
+  font-size:14px;
+}
 </style>
 </head>
+
 <body>
 
-<header>🌌 RISHIVERSE</header>
-
-<div class="top">
-  <div class="card">🪙 Coins: <span id="coins">100</span></div>
-  <div class="card">👥 Online: <span id="online">87</span></div>
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="logo">🎮 Rishiverse</div>
+  <div class="nav-links">
+    <span>Friends</span>
+    <span>Help</span>
+    <span>Settings</span>
+  </div>
 </div>
 
-<div class="grid">
-  <button class="game-btn" onclick="openQuiz()">🧠 Quiz Master</button>
-  <div class="game" onclick="openGame('race')">🏎 Car Racing</div>
-  <div class="game" onclick="openGame('trade')">💹 Trading Game</div>
-  <div class="game" onclick="alert('Coming Soon')">🎮 Mystery Game</div>
-</div>
+<!-- MAIN -->
+<div class="container">
+  <div class="games">
 
-<div id="quiz" class="hidden card" style="margin:20px">
-  <h2>Quiz Game</h2>
-  <p>Question: 2 + 2 = ?</p>
-  <button onclick="win()">4</button>
-</div>
-
-<script>
-let coins=100;
-function openGame(id){
-  document.querySelectorAll('.hidden').forEach(e=>e.style.display="none");
-  document.getElementById(id).style.display="block";
-}
-function win(){
-  coins+=10;
-  document.getElementById("coins").innerText=coins;
-  alert("You earned 10 coins!");
-}
-setInterval(()=>{
-  document.getElementById("online").innerText=
-  Math.floor(50+Math.random()*100);
-},2000);
-</script>
-<script>
-function openQuiz() {
-  document.body.innerHTML = `
-  <div style="
-    min-height:100vh;
-    background:linear-gradient(135deg,#1d2671,#c33764);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:white;
-    font-family:Arial;
-  ">
-    <div style="
-      background:#000;
-      padding:25px;
-      width:350px;
-      border-radius:15px;
-      text-align:center;
-    ">
-      <h2>Quiz Master (HARD)</h2>
-      <p>Question: 2 + 5 × 2 = ?</p>
-
-      <button onclick="alert('Wrong ❌')">14</button><br><br>
-      <button onclick="alert('Correct ✅')">12</button><br><br>
-      <button onclick="alert('Wrong ❌')">10</button><br><br>
-      <button onclick="alert('Wrong ❌')">9</button><br><br>
-
-      <br>
-      <button onclick="location.reload()">⬅ Back to Dashboard</button>
+    <div class="game-card">
+      <div class="game-img">🧠</div>
+      <div class="game-name">Quiz World</div>
     </div>
-  </div>`;
-}
-</script>
+
+    <div class="game-card">
+      <div class="game-img">🏎️</div>
+      <div class="game-name">Car Racing</div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-img">💰</div>
+      <div class="game-name">Trading Sim</div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-img">🎯</div>
+      <div class="game-name">Aim Challenge</div>
+    </div>
+
+    <div class="game-card">
+      <div class="game-img">🎲</div>
+      <div class="game-name">Lucky Spin</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="footer">
+© 2026 Rishiverse – Games for Everyone
+</div>
 
 </body>
 </html>
-
-
