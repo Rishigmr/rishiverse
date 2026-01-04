@@ -3,132 +3,95 @@
 <head>
 <meta charset="UTF-8">
 <title>Rishiverse – All in One Games</title>
-
 <style>
-*{
-  box-sizing:border-box;
-  font-family: Arial, sans-serif;
-}
-
+*{box-sizing:border-box;font-family:Arial}
 body{
   margin:0;
   background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
   color:#fff;
 }
-
-/* HEADER */
 header{
-  background:#000;
   padding:15px;
   text-align:center;
-  font-size:22px;
+  font-size:26px;
   font-weight:bold;
 }
-
-/* DASHBOARD */
-.dashboard{
+.top{
   display:flex;
-  justify-content:space-around;
-  padding:15px;
-  background:rgba(0,0,0,0.6);
+  justify-content:space-between;
+  padding:10px 20px;
 }
-
 .card{
-  background:#111;
+  background:rgba(0,0,0,0.6);
   padding:15px;
-  border-radius:10px;
-  width:30%;
-  text-align:center;
+  border-radius:12px;
 }
-
-/* SEARCH */
-.search-box{
-  padding:15px;
-  text-align:center;
-}
-
-.search-box input{
-  width:90%;
-  max-width:400px;
-  padding:10px;
-  border-radius:8px;
-  border:none;
-  font-size:16px;
-}
-
-/* GAME GRID */
-.games{
+.grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
   gap:15px;
   padding:20px;
 }
-
 .game{
   background:#111;
-  padding:15px;
-  border-radius:12px;
+  padding:20px;
+  border-radius:15px;
   text-align:center;
   cursor:pointer;
-  transition:0.3s;
+  transition:.3s;
 }
-
-.game:hover{
+.game:hover{background:#222;transform:scale(1.05)}
+button{
+  padding:10px 20px;
+  border:none;
+  border-radius:10px;
   background:#ff9800;
-  color:#000;
+  font-size:16px;
+  cursor:pointer;
 }
-
-footer{
-  text-align:center;
-  padding:10px;
-  font-size:14px;
-  opacity:0.7;
-}
+.hidden{display:none}
 </style>
 </head>
-
 <body>
 
-<header>
-🎮 RISHIVERSE – ALL IN ONE GAME WORLD
-</header>
+<header>🌌 RISHIVERSE</header>
 
-<div class="dashboard">
-  <div class="card">
-    💰 Coins  
-    <div id="coins">500</div>
-  </div>
-
-  <div class="card">
-    👤 Player  
-    <div>Rishi</div>
-  </div>
-
-  <div class="card">
-    🎯 Games  
-    <div>1000+</div>
-  </div>
+<div class="top">
+  <div class="card">🪙 Coins: <span id="coins">100</span></div>
+  <div class="card">👥 Online: <span id="online">87</span></div>
 </div>
 
-<div class="search-box">
-  <input type="text" placeholder="Search games... (racing, quiz, trading)">
+<div class="grid">
+  <div class="game" onclick="openGame('quiz')">🧠 Quiz Master</div>
+  <div class="game" onclick="openGame('race')">🏎 Car Racing</div>
+  <div class="game" onclick="openGame('trade')">💹 Trading Game</div>
+  <div class="game" onclick="alert('Coming Soon')">🎮 Mystery Game</div>
 </div>
 
-<div class="games">
-  <div class="game">🚗 Car Racing</div>
-  <div class="game">📈 Trading Game</div>
-  <div class="game">🧠 Quiz Master</div>
-  <div class="game">🎯 Shooting Game</div>
-  <div class="game">🏰 Strategy Game</div>
-  <div class="game">💰 Money Game</div>
-  <div class="game">⚔ Battle Arena</div>
-  <div class="game">🎲 Lucky Spin</div>
+<div id="quiz" class="hidden card" style="margin:20px">
+  <h2>Quiz Game</h2>
+  <p>Question: 2 + 2 = ?</p>
+  <button onclick="win()">4</button>
 </div>
 
-<footer>
-© 2026 Rishiverse | Multiplayer & 1000+ Games Coming Soon
-</footer>
+<script>
+let coins=100;
+function openGame(id){
+  document.querySelectorAll('.hidden').forEach(e=>e.style.display="none");
+  document.getElementById(id).style.display="block";
+}
+function win(){
+  coins+=10;
+  document.getElementById("coins").innerText=coins;
+  alert("You earned 10 coins!");
+}
+setInterval(()=>{
+  document.getElementById("online").innerText=
+  Math.floor(50+Math.random()*100);
+},2000);
+</script>
 
 </body>
 </html>
+
 
