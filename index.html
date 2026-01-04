@@ -1,145 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Rishiverse</title>
-
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family: Arial, sans-serif;
-}
-
-/* BODY */
-body{
-  background:#121212;
-  color:white;
-}
-
-/* TOP NAVBAR */
-.navbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px 25px;
-  background:#1f1f1f;
-}
-
-.logo{
-  font-size:22px;
-  font-weight:bold;
-}
-
-.nav-links span{
-  margin-left:20px;
-  cursor:pointer;
-  opacity:0.8;
-}
-
-.nav-links span:hover{
-  opacity:1;
-}
-
-/* MAIN AREA */
-.container{
-  padding:25px;
-}
-
-/* GAME GRID */
-.games{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:20px;
-}
-
-/* GAME CARD */
-.game-card{
-  background:#222;
-  border-radius:12px;
-  overflow:hidden;
-  cursor:pointer;
-  transition:0.3s;
-}
-
-.game-card:hover{
-  transform:scale(1.05);
-}
-
-/* GAME IMAGE */
-.game-img{
-  height:120px;
-  background:linear-gradient(135deg,#ff9800,#ff5722);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:40px;
-}
-
-/* GAME NAME */
-.game-name{
-  padding:10px;
-  text-align:center;
-  font-size:16px;
-}
-
-/* FOOTER */
-.footer{
-  text-align:center;
-  padding:15px;
-  opacity:0.6;
-  font-size:14px;
-}
-</style>
+  <title>Rishiverse</title>
+  <style>
+    body{
+      margin:0;
+      font-family:Arial;
+      background:#111;
+      color:white;
+    }
+    header{
+      background:#000;
+      padding:15px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    header a{
+      color:white;
+      margin-left:15px;
+      text-decoration:none;
+    }
+    .games{
+      display:flex;
+      gap:20px;
+      padding:20px;
+    }
+    .card{
+      background:#ff8c00;
+      width:180px;
+      height:180px;
+      border-radius:15px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      text-decoration:none;
+      color:black;
+      font-weight:bold;
+    }
+    .card img{
+      width:80px;
+      height:80px;
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<div class="navbar">
-  <div class="logo">🎮 Rishiverse</div>
-  <div class="nav-links">
-    <span>Friends</span>
-    <span>Help</span>
-    <span>Settings</span>
+<header>
+  <h2>🎮 Rishiverse</h2>
+  <div>
+    <a href="friends.html">Friends</a>
+    <a href="help.html">Help</a>
+    <a href="settings.html">Settings</a>
   </div>
-</div>
+</header>
 
-<!-- MAIN -->
-<div class="container">
-  <div class="games">
+<div class="games">
 
-    <div class="game-card">
-      <div class="game-img">🧠</div>
-      <div class="game-name">Quiz World</div>
-    </div>
+  <a class="card" href="quiz.html">
+    <img src="https://i.imgur.com/1X5QH6G.png">
+    Quiz Game
+  </a>
 
-    <div class="game-card">
-      <div class="game-img">🏎️</div>
-      <div class="game-name">Car Racing</div>
-    </div>
+  <a class="card" href="car.html">
+    <img src="https://i.imgur.com/9QZ7ZQy.png">
+    Car Racing
+  </a>
 
-    <div class="game-card">
-      <div class="game-img">💰</div>
-      <div class="game-name">Trading Sim</div>
-    </div>
-
-    <div class="game-card">
-      <div class="game-img">🎯</div>
-      <div class="game-name">Aim Challenge</div>
-    </div>
-
-    <div class="game-card">
-      <div class="game-img">🎲</div>
-      <div class="game-name">Lucky Spin</div>
-    </div>
-
-  </div>
-</div>
-
-<div class="footer">
-© 2026 Rishiverse – Games for Everyone
 </div>
 
 </body>
