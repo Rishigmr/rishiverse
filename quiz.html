@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Rishiverse – Mega Quiz</title>
+<title>Rishiverse Quiz</title>
 
 <style>
 body{
   margin:0;
-  font-family:Arial;
-  background:linear-gradient(135deg,#141e30,#243b55);
-  height:100vh;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+  min-height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
@@ -17,14 +17,19 @@ body{
 }
 .box{
   background:#111;
-  width:92%;
-  max-width:460px;
+  width:95%;
+  max-width:500px;
   padding:20px;
   border-radius:15px;
   box-shadow:0 0 25px black;
 }
-h2{text-align:center;margin:5px 0;}
-#info{display:flex;justify-content:space-between;font-size:14px;}
+h2{text-align:center;margin:10px 0;}
+#info{
+  display:flex;
+  justify-content:space-between;
+  font-size:14px;
+  margin-bottom:10px;
+}
 .option{
   background:#222;
   padding:10px;
@@ -33,8 +38,8 @@ h2{text-align:center;margin:5px 0;}
   cursor:pointer;
 }
 .option:hover{background:#444;}
-.correct{background:green!important;}
-.wrong{background:red!important;}
+.correct{background:green !important;}
+.wrong{background:red !important;}
 button{
   width:100%;
   padding:10px;
@@ -43,125 +48,132 @@ button{
   background:#ff9800;
   margin-top:10px;
   cursor:pointer;
+  font-size:16px;
 }
 </style>
 </head>
 
 <body>
 <div class="box">
-  <h2>Rishiverse Quiz</h2>
+  <h2>🎮 Rishiverse Quiz</h2>
   <div id="info">
     <span id="sub">Subject</span>
-    <span>⏱ <span id="time">15</span></span>
+    <span>⏱ <span id="time">15</span>s</span>
     <span>Score: <span id="score">0</span></span>
   </div>
-  <p id="q"></p>
-  <div id="ops"></div>
-  <button onclick="nextQ()">Next</button>
+
+  <p id="question">Loading...</p>
+  <div id="options"></div>
+
+  <button onclick="nextQuestion()">Next</button>
 </div>
 
 <script>
-let score=0,time=15,timer;
+let score = 0;
+let time = 15;
+let timer;
+let index = 0;
 
-// ---------- QUESTION BANK ----------
-let questions=[];
+// ================= QUESTION BANK =================
+let questions = [];
 
 // ENGLISH
-["noun","verb","adjective","adverb"].forEach(w=>{
+["noun","verb","adjective","adverb"].forEach(word=>{
   questions.push({
-    s:"English",
-    q:`Identify the part of speech: "${w}"`,
+    subject:"English",
+    q:`Identify the part of speech: "${word}"`,
     o:["Noun","Verb","Adjective","Adverb"],
-    a:["noun","verb","adjective","adverb"].indexOf(w)
+    a:["noun","verb","adjective","adverb"].indexOf(word)
   });
 });
 
 // SCIENCE
 questions.push(
- {s:"Science",q:"Speed of light?",o:["3×10⁸ m/s","300 m/s","150 km/s","None"],a:0},
- {s:"Science",q:"Human blood group discovered by?",o:["Newton","Landsteiner","Darwin","Einstein"],a:1}
+ {subject:"Science",q:"Speed of light is?",o:["3×10⁸ m/s","300 m/s","150 km/s","None"],a:0},
+ {subject:"Science",q:"Blood group discovered by?",o:["Newton","Landsteiner","Darwin","Einstein"],a:1}
 );
 
 // SST
 questions.push(
- {s:"SST",q:"Father of Indian Constitution?",o:["Nehru","Ambedkar","Gandhi","Patel"],a:1}
+ {subject:"SST",q:"Father of Indian Constitution?",o:["Nehru","Ambedkar","Gandhi","Patel"],a:1}
 );
 
 // COMPUTER
 questions.push(
- {s:"Computer",q:"Binary of 2?",o:["10","11","01","00"],a:0},
- {s:"Computer",q:"CPU full form?",o:["Central Process Unit","Central Processing Unit","Control Unit","None"],a:1}
+ {subject:"Computer",q:"Binary of 2?",o:["10","11","01","00"],a:0},
+ {subject:"Computer",q:"CPU full form?",o:["Central Process Unit","Central Processing Unit","Control Unit","None"],a:1}
 );
 
-// GK AUTO
-for(let i=1;i<=50;i++){
+// GK (100)
+for(let i=1;i<=100;i++){
   questions.push({
-    s:"GK",
+    subject:"GK",
     q:`Which number comes after ${i}?`,
     o:[i,i+1,i+2,i-1],
     a:1
   });
 }
 
-// MATHS AUTO (300+)
+// MATHS (300)
 for(let i=1;i<=300;i++){
   let a=Math.floor(Math.random()*20)+1;
   let b=Math.floor(Math.random()*20)+1;
   questions.push({
-    s:"Maths",
+    subject:"Maths",
     q:`${a} × ${b} = ?`,
     o:[a*b,a+b,a-b,a*b+1],
     a:0
   });
 }
 
-// SHUFFLE (NO REPEAT)
+// SHUFFLE
 questions.sort(()=>Math.random()-0.5);
 
-let i=0;
+// ================= GAME LOGIC =================
+function loadQuestion(){
+  clearInterval(timer);
+  time = 15;
+  document.getElementById("time").innerText = time;
 
-// ---------- GAME ----------
-function load(){
- clearInterval(timer);
- time=15;
- document.getElementById("time").innerText=time;
- timer=setInterval(()=>{
-   time--;
-   document.getElementById("time").innerText=time;
-   if(time==0) nextQ();
- },1000);
+  timer = setInterval(()=>{
+    time--;
+    document.getElementById("time").innerText = time;
+    if(time === 0) nextQuestion();
+  },1000);
 
- let q=questions[i];
- document.getElementById("sub").innerText=q.s;
- document.getElementById("q").innerText=q.q;
- let h="";
- q.o.forEach((x,n)=>{
-   h+=`<div class="option" onclick="check(${n},this)">${x}</div>`;
- });
- document.getElementById("ops").innerHTML=h;
+  let q = questions[index];
+  document.getElementById("sub").innerText = q.subject;
+  document.getElementById("question").innerText = q.q;
+
+  let html="";
+  q.o.forEach((op,i)=>{
+    html += `<div class="option" onclick="checkAnswer(${i},this)">${op}</div>`;
+  });
+  document.getElementById("options").innerHTML = html;
 }
 
-function check(n,el){
- let q=questions[i];
- if(n===q.a){
-   el.classList.add("correct");
-   score++;
- }else{
-   el.classList.add("wrong");
- }
- document.getElementById("score").innerText=score;
+function checkAnswer(i,el){
+  let q = questions[index];
+  if(i === q.a){
+    el.classList.add("correct");
+    score++;
+  }else{
+    el.classList.add("wrong");
+  }
+  document.getElementById("score").innerText = score;
 }
 
-function nextQ(){
- i++;
- if(i>=questions.length){
-   alert("Quiz Finished! Score: "+score);
-   i=0; score=0;
- }
- load();
+function nextQuestion(){
+  index++;
+  if(index >= questions.length){
+    alert("Quiz Finished! Score: " + score);
+    index = 0;
+    score = 0;
+  }
+  loadQuestion();
 }
 
-load();
+loadQuestion();
 </script>
 </body>
 </html>
